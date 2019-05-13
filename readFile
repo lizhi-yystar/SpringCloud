@@ -1,0 +1,5 @@
+Resource resource = new ClassPathResource("classpath:sixt.json");
+File sourceFile =  resource.getFile();
+
+InputStream inputStream=JSONUtil.class.getResourceAsStream("/jsonFile/sixt.json");
+File file = ResourceUtils.getFile("classpath:jsonFile/sixt.json");
