@@ -1,0 +1,63 @@
+<shopOrderService version='1.0'>
+    <orderData id='63340519408918945280394799954349' shopTraceNo='7' success='00'>
+        <submitTime>20160810142922</submitTime>
+        <merchant id='002777982990003' />
+        <transData type='020211'>
+            <installments timing='3'></installments>
+            <shopBatchNo>20101110</shopBatchNo>
+            <remark>分期测试</remark>
+            <addData>测试</addData>
+            <transAmount>200000</transAmount>
+            <totalAmount currency='156'>200000</totalAmount>
+            <hbAmount>0</hbAmount>
+            <returnCode>00</returnCode>
+            <returnMessage>支付成功</returnMessage>
+            <authCode>737722</authCode>
+            <traceNo>757798</traceNo>
+            <batchNo>881170</batchNo>
+            <invoiceNo>757798</invoiceNo>
+            <hostTransTime>20160810142922</hostTransTime>
+        </transData>
+        <pospOrderId>563620</pospOrderId>
+        <card no='************2599'></card>
+    </orderData>
+</shopOrderService>
+
+
+----------------------------------
+String content = "<shopOrderService version='1.0'><orderData id='63340519408918945280394799954349' shopTraceNo='7' success='00'><submitTime>20160810142922</submitTime><merchant id='002777982990003' /><transData type='020211'><installments timing='3'></installments><shopBatchNo>20101110</shopBatchNo><remark>分期测试</remark><addData>测试</addData><transAmount>200000</transAmount><totalAmount currency='156'>200000</totalAmount><hbAmount>0</hbAmount><returnCode>00</returnCode><returnMessage>支付成功</returnMessage><authCode>737722</authCode><traceNo>757798</traceNo><batchNo>881170</batchNo><invoiceNo>757798</invoiceNo><hostTransTime>20160810142922</hostTransTime></transData><pospOrderId>563620</pospOrderId><card no='************2599'></card></orderData></shopOrderService>";
+// 匹配订单号
+Pattern pattern = Pattern.compile("(?<=id=\')\\d{32}+");  
+Matcher matcher = pattern.matcher(content);
+while(matcher.find()){
+	System.out.println("订单号："+matcher.group());
+}
+// 匹配状态码
+Pattern pattern2 = Pattern.compile("(?<=<returnMessage>)([^<])+");  
+Matcher matcher2 = pattern2.matcher(content);
+while(matcher2.find()){
+	System.out.println("状态："+matcher2.group());
+}
+
+method2:
+Pattern pattern = Pattern.compile("((?<=id=\')\\d{32}+|(?<=<returnMessage>)([^<])+)");  
+Matcher matcher = pattern.matcher(content);
+while(matcher.find()){
+	System.out.println(matcher.group());
+}
+
+-----------------
+Pattern pattern = Pattern.compile("((?<id>(?<=id=\')\\d{32}+)|(?<return>(?<=<returnMessage>)([^<])+))");  
+Matcher matcher = pattern.matcher(content);
+while(matcher.find()){
+	if (matcher.group("id") != null) {
+		System.out.println(matcher.group("id"));
+	}
+	if (matcher.group("return") != null) {
+		System.out.println(matcher.group("return"));
+	}
+}
+
+结果：
+订单号：63340519408918945280394799954349
+状态：支付成功
