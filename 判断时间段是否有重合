@@ -1,0 +1,25 @@
+   private boolean isTimeCoincide(LocalDateTime availableTime, LocalDateTime offLineTime, CmsTopBoardDto dto) {
+        boolean flag = false;
+        //不存在永久有效的 则需检查相同业务下时间是否重合  查询到多个记录  每条记录包含一个上，下架时间
+        List<CmsTopBoard> cmsTopBoardList = cmsTopBoardMapper.findAvailableTopBoard(dto);
+        if (CollectionUtils.isNotEmpty(cmsTopBoardList)) {
+            List<LocalDateTime> onlineCollection = new ArrayList<>();
+            onlineCollection.add(availableTime);
+            List<LocalDateTime> offLineCollection = new ArrayList<>();
+            offLineCollection.add(offLineTime);
+            for (CmsTopBoard topBoard : cmsTopBoardList) {
+                onlineCollection.add(topBoard.getAvailableTime());
+                offLineCollection.add(topBoard.getOfflineTime());
+            }
+            Collections.sort(onlineCollection);
+            Collections.sort(offLineCollection);
+            for (int j = 1; j < onlineCollection.size(); j++) {
+                if (onlineCollection.get(j).isBefore(offLineCollection.get(j - 1))) {
+                    //日期时间段出现重叠
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        return flag;
+    }
