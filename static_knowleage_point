@@ -8,6 +8,10 @@ class StaticClass{
     {
         System.out.println("here is block");
     }
+    
+     static class InnerClass{
+        static StaticClass a = new StaticClass();
+    }
 
     static int a = 1;
 
