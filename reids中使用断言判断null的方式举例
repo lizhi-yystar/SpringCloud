@@ -1,0 +1,10 @@
+    default void set(K key, V value, Duration timeout) {
+        //判断对象不为空
+        Assert.notNull(timeout, "Timeout must not be null!");
+        if (TimeoutUtils.hasMillis(timeout)) {
+            this.set(key, value, timeout.toMillis(), TimeUnit.MILLISECONDS);
+        } else {
+            this.set(key, value, timeout.getSeconds(), TimeUnit.SECONDS);
+        }
+
+    }
