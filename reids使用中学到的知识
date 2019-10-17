@@ -7,4 +7,6 @@
             this.set(key, value, timeout.getSeconds(), TimeUnit.SECONDS);
         }
 
-    }
+    
+    2.
+    obj instanceof String vs    clazz.isAssignableFrom(String.class)
